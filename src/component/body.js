@@ -1,21 +1,34 @@
 import React, { Component } from 'react';
 //import VideoData from './page1';
 import HomePage from './home';
+import SignupPage from './signup';
 import ImageGallery from './imagegallery';
-import './style.css';
+import VideoGallery from './videogallery';
+import TablePage from './table';
+import EmailPage from './email';
+import '../css/global.css';
 
 class Body extends Component {
 	render() {
 		var displaycontent = () => {
 			var activetab = this.props.activetab;
-			if( activetab == 1 ) {
-				//return <Videodata/>
-				return <HomePage/>
-			} else if( activetab == 2 ) {
+			if( activetab == 2 ) {
 				//return <Imagedata/>
-				return <h1>wow 2</h1>
+				return <SignupPage/>
+			} else if( activetab == 3 ) {
+				//return <Imagedata/>
+				return <ImageGallery/>
+			} else if( activetab == 4 ) {
+				//return <Imagedata/>
+				return <VideoGallery/>
+			} else if( activetab == 5 ) {
+				//return <Imagedata/>
+				return <TablePage/>
+			} else if( activetab == 6 ) {
+				//return <Imagedata/>
+				return <EmailPage/>
 			} else {
-				return <div className="text">page 3</div>
+				return <HomePage/>
 			}
 		};
 

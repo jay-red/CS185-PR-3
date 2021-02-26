@@ -1,7 +1,7 @@
 import './App.css';
 
 import Body from './component/body'
-import Tablist from './component/tablist'
+import Navbar from './component/navbar'
 import { Component } from 'react';
 
 class App extends Component {
@@ -21,27 +21,36 @@ class App extends Component {
 		const tabs = [
 			{
 				id: 1,
-				title: 'Video'
+				title: 'Home'
 			},
 			{
 				id: 2,
-				title: 'Image'
+				title: 'Text'
 			},
 			{
 				id: 3,
-				title: 'table'
+				title: 'Images'
+			},
+			{
+				id: 4,
+				title: 'Videos'
+			},
+			{
+				id: 5,
+				title: 'Table'
+			},
+			{
+				id: 6,
+				title: 'Email'
 			}
 		]
 
 		return (
 			<div className="App">
-				<h1>Tabs Demo</h1>
-				<div className="nav-bar">
-					<Tablist tabs={tabs} activetab={this.state.active} ctab={this.changetab}/>
+				<div id="navbar">
+					<Navbar tabs={tabs} activetab={this.state.active} ctab={this.changetab}/>
 				</div>
-				<div className="main-body">
-					<Body activetab={this.state.active}/>
-				</div>
+				<Body activetab={this.state.active}/>
 			</div>
 		);
 	}
