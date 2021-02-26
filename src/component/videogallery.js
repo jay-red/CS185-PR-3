@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from "react-dom"
+import VideoItem from './videoitem';
 import '../css/global.css';
 import '../css/videos.css';
 
@@ -8,14 +9,23 @@ class VideoGallery extends Component {
 	constructor( props ) {
 		super( props );
 		this.state = {
-			scrollToTop: false
+			scrollToTop: false,
+			lightbox: false,
+			lightboxInnerVid: null
 		}
 		this.handleScroll = this.handleScroll.bind( this );
 		this.handleScrollTop = this.handleScrollTop.bind( this );
+		this.handleMouseDown = this.handleMouseDown.bind( this );
+		this.handleLightboxInteract = this.handleLightboxInteract.bind( this );
+		this.handleVideoClick = this.handleVideoClick.bind( this );
+		this.gallery = this.gallery.bind( this );
 	}
 
 	componentDidMount() {
 		document.addEventListener( "scroll", this.handleScroll );
+		this.setState( {
+			lightboxInnerVid: document.getElementById( "lightbox-inner" )
+		} );
 	}
 
 	componentWillUnmount() {
@@ -32,6 +42,48 @@ class VideoGallery extends Component {
 		document.scrollingElement.scrollTop = 0;
 	}
 
+	handleLightboxInteract( clientX, clientY ) {
+		var MIN_X, MAX_X, MIN_Y, MAX_Y;
+		MIN_X = 0.05 * window.innerWidth;
+		MAX_X = 0.95 * window.innerWidth;
+		MIN_Y = 0.05 * window.innerHeight;
+		MAX_Y = 0.95 * window.innerHeight;
+		if( ( clientX < MIN_X || clientX > MAX_X ) || ( clientY < MIN_Y || clientY > MAX_Y ) ) {
+			this.setState( {
+				lightbox : false
+			} );
+			this.state.lightboxInnerVid.pause();
+		}
+	}
+
+	handleMouseDown( evt ) {
+		this.handleLightboxInteract( evt.clientX, evt.clientY );
+	}
+
+	handleVideoClick( evt ) {
+		this.setState( {
+			lightbox: true
+		} );
+		var video = evt.target;
+		this.state.lightboxInnerVid.src = evt.target.src;
+	}
+
+	gallery() {
+		const videos = [
+			require( "../assets/1.mp4" ),
+			require( "../assets/2.mp4" ),
+			require( "../assets/3.mp4" ),
+			require( "../assets/4.mp4" ),
+			require( "../assets/5.mp4" ),
+			require( "../assets/6.mp4" ),
+			require( "../assets/7.mp4" )
+		]
+
+		return videos.map( ( video ) => {
+			return( <VideoItem vid={video} cl={this.handleVideoClick}/> );
+		} );
+	}
+
 	render() {
 
 		var video1 = require( "../assets/1.mp4" );
@@ -44,42 +96,10 @@ class VideoGallery extends Component {
 
 		return (
 			<div>
-				<div id="navbar">
-					<a href="./index.html">
-						<div class="navbar-item">
-							Home
-						</div>
-					</a>
-					<a href="./text.html">
-						<div class="navbar-item">
-							Text
-						</div>
-					</a>
-					<a href="./images.html">
-						<div class="navbar-item">
-							Images
-						</div>
-					</a>
-					<a href="./videos.html">
-						<div class="navbar-item highlighted">
-							Videos
-						</div>
-					</a>
-					<a href="./table.html">
-						<div class="navbar-item">
-							Table
-						</div>
-					</a>
-					<a href="./email.html">
-						<div class="navbar-item">
-							Email
-						</div>
-					</a>
+				<div id="lightbox-video-background" class={this.state.lightbox ? "show" : "hide"}>
 				</div>
-				<div id="lightbox-background" class="hide">
-				</div>
-				<div id="lightbox-overlay" class="hide">
-					<div id="lightbox-item">
+				<div id="lightbox-video-overlay" class={this.state.lightbox ? "show" : "hide"} onMouseDown={this.handleMouseDown}>
+					<div id="lightbox-video-item">
 						<video id="lightbox-inner" src="./assets/1.mp4" controls />
 					</div>
 				</div>
@@ -87,28 +107,8 @@ class VideoGallery extends Component {
 					<div id="header">
 						<h1>Trailers</h1>
 					</div>
-					<div id="gallery">
-						<div class="gallery-item">
-							<video src={video1.default} />
-						</div>
-						<div class="gallery-item">
-							<video src={video2.default} />
-						</div>
-						<div class="gallery-item">
-							<video src={video3.default} />
-						</div>
-						<div class="gallery-item">
-							<video src={video4.default} />
-						</div>
-						<div class="gallery-item">
-							<video src={video5.default} />
-						</div>
-						<div class="gallery-item">
-							<video src={video6.default} />
-						</div>
-						<div class="gallery-item">
-							<video src={video7.default} />
-						</div>
+					<div id="gallery-video">
+						{this.gallery()}
 					</div>
 				</div>
 				<div id="scroll-button" class={this.state.scrollToTop ? "show" : "hide"} onClick={this.handleScrollTop}>

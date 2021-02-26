@@ -1,9 +1,9 @@
-#gallery {
+#gallery-video {
 	width: 100%;
 	text-align: center;
 }
 
-#lightbox-background, #lightbox-overlay {
+#lightbox-video-background, #lightbox-video-overlay {
 	position: fixed;
 	width: 100%;
 	height: 100%;
@@ -11,17 +11,17 @@
 	left: 0px;
 }
 
-#lightbox-overlay {
+#lightbox-video-overlay {
 	z-index: 10419;
 }
 
-#lightbox-background {
+#lightbox-video-background {
 	background: #000000;
 	opacity: 0.9;
 	z-index: 410;
 }
 
-#lightbox-item {
+#lightbox-video-item {
 	position: relative;
 	background: #050505;
 	width: 90vw;
@@ -30,13 +30,13 @@
 	left: 5vw;
 }
 
-.lightbox-item {
+.lightbox-video-item {
 	width: 100%;
 	height: 100%;
 	background-size: contain;
 }
 
-.gallery-item {
+.gallery-video-item {
 	display: inline-block;
 	margin: 10px;
 	width: 400px;
@@ -51,7 +51,7 @@ video {
 	cursor: pointer;
 }
 
-.gallery-item video {
+.gallery-video-item video {
 	height: 100%;
 }
 
